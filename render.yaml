@@ -3,7 +3,7 @@ services:
     name: packagepulse-api
     runtime: node
     plan: free
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @packagepulse/api db:generate && pnpm --filter @packagepulse/api db:migrate && pnpm --filter @packagepulse/api build
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @packagepulse/api db:generate && pnpm --filter @packagepulse/api db:migrate && pnpm --filter @packagepulse/api build
     startCommand: pnpm --filter @packagepulse/api start
     healthCheckPath: /api/health
     envVars:
@@ -26,7 +26,7 @@ services:
   - type: web
     name: packagepulse-web
     runtime: static
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @packagepulse/web build
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @packagepulse/web build
     staticPublishPath: apps/web/dist
     routes:
       - type: rewrite
