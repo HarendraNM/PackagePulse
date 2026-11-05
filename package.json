@@ -1,0 +1,8 @@
+{
+  "name": "packagepulse",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.25.0",
+  "scripts": { "dev": "pnpm --parallel --filter @packagepulse/api --filter @packagepulse/web dev", "build": "pnpm -r build", "typecheck": "pnpm -r typecheck", "test": "pnpm --filter @packagepulse/api test", "db:generate": "pnpm --filter @packagepulse/api db:generate", "db:migrate": "pnpm --filter @packagepulse/api db:migrate" },
+  "devDependencies": { "typescript": "^5.7.3", "@types/node": "^22.13.4" }
+}

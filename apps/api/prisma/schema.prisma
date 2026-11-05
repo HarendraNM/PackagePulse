@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String           @id @default(cuid())
+  name         String
+  email        String           @unique
+  passwordHash String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  tracked      TrackedPackage[]
+}
+
+model TrackedPackage {
+  id          String   @id @default(cuid())
+  userId      String
+  packageName String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  monitoringEnabled Boolean @default(true)
+  lastCheckedAt DateTime?
+  lastError String? @db.VarChar(500)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId, packageName])
+  @@index([userId, createdAt])
+  @@index([monitoringEnabled, lastCheckedAt])
+}
+
+model PackageSnapshot {
+  id              String   @id @default(cuid())
+  packageName     String
+  version         String?
+  healthScore     Int?
+  securitySummary Json?
+  collectedAt     DateTime @default(now())
+  @@index([packageName, collectedAt])
+}

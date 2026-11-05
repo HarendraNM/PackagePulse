@@ -1,0 +1,12 @@
+node_modules/
+.pnpm-store/
+dist/
+.env
+.env.*
+!.env.example
+coverage/
+.turbo/
+*.log
+*.tsbuildinfo
+apps/web/vite.config.js
+apps/web/vite.config.d.ts
