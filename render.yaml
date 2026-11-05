@@ -3,8 +3,7 @@ services:
     name: packagepulse-api
     runtime: node
     plan: free
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @packagepulse/api db:generate && pnpm --filter @packagepulse/api build
-    preDeployCommand: pnpm --filter @packagepulse/api db:migrate
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @packagepulse/api db:generate && pnpm --filter @packagepulse/api db:migrate && pnpm --filter @packagepulse/api build
     startCommand: pnpm --filter @packagepulse/api start
     healthCheckPath: /api/health
     envVars:
@@ -21,26 +20,6 @@ services:
           type: web
           name: packagepulse-web
           envVarKey: RENDER_EXTERNAL_URL
-      - key: REDIS_URL
-        sync: false
-      - key: MONITOR_INTERVAL_MS
-        value: "21600000"
-
-  - type: worker
-    name: packagepulse-monitor
-    runtime: node
-    plan: 0.5c-512mb
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @packagepulse/api db:generate && pnpm --filter @packagepulse/api build
-    startCommand: pnpm --filter @packagepulse/api worker
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: DATABASE_URL
-        sync: false
-      - key: DIRECT_URL
-        sync: false
-      - key: REDIS_URL
-        sync: false
       - key: MONITOR_INTERVAL_MS
         value: "21600000"
 

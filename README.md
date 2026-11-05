@@ -94,7 +94,7 @@ Scoped package names should be URL-encoded as one path segment (for example `%40
 
 ### Render full stack
 
-Connect this repository to Render as a Blueprint. The included `render.yaml` defines the API, static web app, and BullMQ worker, and wires the frontend/API origins automatically. The API uses Render's free plan (which can spin down when idle); the monitoring worker uses the smallest always-on worker plan and incurs Render compute charges. Set the pooled Neon connection string as `DATABASE_URL`, the direct Neon connection string as `DIRECT_URL`, and the Upstash TLS connection string as `REDIS_URL` for the API and worker. Render generates `SESSION_SECRET` and applies checked-in Prisma migrations before starting the API. `GITHUB_TOKEN` is optional and can be added to the API service if GitHub rate limits become an issue.
+Connect this repository to Render as a Blueprint. The included `render.yaml` defines the API and static web app on free plans and wires their origins automatically. Render's free API service can spin down when idle. To stay within the free plan, this Blueprint omits the always-on BullMQ worker and does not configure Redis; scheduled package monitoring is disabled in production. Set the pooled Neon connection string as `DATABASE_URL` and the direct Neon connection string as `DIRECT_URL`. Render generates `SESSION_SECRET` and the API build applies checked-in Prisma migrations. `GITHUB_TOKEN` is optional and can be added to the API service if GitHub rate limits become an issue.
 
 ## Monitoring behavior
 
